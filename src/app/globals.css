@@ -7,6 +7,15 @@
   --font-mono: ui-monospace, Menlo, "Segoe UI Mono", "Ubuntu Mono", monospace;
 }
 
+html[data-color-mode="dark"] { color-scheme: dark; }
+
+/* Brand wordmark: green "sleepy" on light, cream on dark (brand guideline colours) */
+.sh-wordmark-sleepy { color: #3a6549; }
+html[data-color-mode="dark"] .sh-wordmark-sleepy { color: #faeed6; }
+
+/* Collapsible module sidebar (toggled from the top bar) */
+html[data-sidebar="collapsed"] .sh-module-sidebar { display: none; }
+
 html,
 body {
   background: var(--ds-surface-sunken);

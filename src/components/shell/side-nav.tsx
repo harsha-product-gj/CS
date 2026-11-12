@@ -56,7 +56,7 @@ export function ModuleNav({ apps, variant }: { apps: NavApp[]; variant: "sidebar
   }
 
   return (
-    <nav aria-label={app.label} className="hidden w-56 shrink-0 border-r border-ds-border bg-ds-surface p-2 lg:block">
+    <nav aria-label={app.label} className="sh-module-sidebar hidden w-56 shrink-0 border-r border-ds-border bg-ds-surface p-2 lg:block">
       <p className="ds-heading-xxsmall px-2 pt-2 pb-2 text-ds-text-subtlest uppercase">{app.label}</p>
       <ul className="space-y-0.5">
         {app.items.map((i) => {
