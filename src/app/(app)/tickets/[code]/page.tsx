@@ -10,6 +10,8 @@ import { Badge, Card, CardHeader, Empty } from "@/components/ui";
 import { TicketForm } from "./ticket-form";
 import { ActivityComposer } from "./activity";
 import { CloseTicketButton, ConvertToComplaint } from "./ticket-actions";
+import { RequestAccess } from "./request-access";
+import { db } from "@/lib/supabase/server";
 
 const FIELD_LABEL: Record<string, string> = {
   customer_name: "name", phone: "mobile", alt_phone: "alternate mobile", email: "email", address: "address", pincode: "pincode",
@@ -45,6 +47,9 @@ export default async function TicketPage({ params }: PageProps<"/tickets/[code]"
   const { ticket: t, items, contacts, notes, audit, children, parentCode, previousCode } = data;
   const staff = new Map(staffList.map((s) => [s.id, s.full_name as string]));
   const canEdit = canEditTicket(user, t);
+  const hasPendingRequest = canEdit
+    ? false
+    : !!(await db().from("edit_requests").select("id").eq("ticket_id", t.id).eq("requested_by", user.id).eq("status", "pending").maybeSingle()).data;
   const isAdmin = user.roles.includes("admin");
   const now = requestTime();
   const remaining = (new Date(t.deadline).getTime() - now) / 1000;
@@ -94,8 +99,13 @@ export default async function TicketPage({ params }: PageProps<"/tickets/[code]"
         </Card>
       )}
       {!canEdit && !parentCode && (
-        <Card className="mb-6 flex items-center gap-2 p-4 text-ds-text-subtle">
-          <Lock size={16} aria-hidden /> Owned by {t.owner_name ?? "someone else"}. You can view it; ask an admin to assign it to you to make changes.
+        <Card className="mb-6 flex flex-wrap items-center gap-x-3 gap-y-2 p-4 text-ds-text-subtle">
+          <Lock size={16} aria-hidden />
+          <span className="flex-1">
+            Owned by {t.owner_name ?? "someone else"}
+            {t.temp_owner_name && <> · covered by {t.temp_owner_name}</>}. You can view it; editing needs an admin’s approval.
+          </span>
+          {!t.is_closed && <RequestAccess ticketId={t.id} pending={hasPendingRequest} />}
         </Card>
       )}
       {t.status === "Resolved" && !t.is_closed && t.resolution && NEEDS_OPS.includes(t.resolution) && (

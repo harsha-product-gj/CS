@@ -26,6 +26,7 @@ export default async function NewTicketPage({ searchParams }: PageProps<"/ticket
         orderCode: o.order_code,
         orderChannel: o.order_channel === "UNMAPPED" ? "" : o.order_channel,
         orderInData: true,
+        customerLocked: true,
         customerName: o.customer_name ?? "",
         phone: o.phone ?? "",
         address: [o.address_line1, o.address_line2, o.city, o.state].filter(Boolean).join(", "),
@@ -41,6 +42,7 @@ export default async function NewTicketPage({ searchParams }: PageProps<"/ticket
     prefill = {
       items: [],
       phone: phoneParam,
+      customerLocked: !!o,
       customerName: o?.customer_name ?? "",
       address: o ? [o.address_line1, o.address_line2, o.city, o.state].filter(Boolean).join(", ") : "",
       pincode: o?.pincode ?? "",

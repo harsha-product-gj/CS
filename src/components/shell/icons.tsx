@@ -1,5 +1,5 @@
 import {
-  CalendarClock, Database, Headset, LayoutDashboard, PackageCheck, PhoneMissed, RotateCcw,
+  CalendarClock, CalendarDays, Database, ShieldCheck, UserRoundCog, Headset, LayoutDashboard, PackageCheck, PhoneMissed, RotateCcw,
   Search, Settings, Ticket, Tickets, Timer, Truck, Undo2, Users, type LucideProps,
 } from "lucide-react";
 import type { IconName } from "@/lib/nav";
@@ -14,6 +14,9 @@ const MAP: Record<IconName, React.ComponentType<LucideProps>> = {
   followups: CalendarClock,
   alltickets: Tickets,
   sla: Timer,
+  roster: CalendarDays,
+  cover: UserRoundCog,
+  approvals: ShieldCheck,
   missed: PhoneMissed,
   resolutions: RotateCcw,
   pickups: Undo2,

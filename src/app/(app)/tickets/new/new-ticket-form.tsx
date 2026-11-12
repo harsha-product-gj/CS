@@ -15,6 +15,8 @@ export type NewTicketPrefill = {
   orderCode?: string;
   orderChannel?: string;
   orderInData?: boolean;
+  /** Customer found in our order data: name, mobile and address come from there and can't be edited. */
+  customerLocked?: boolean;
   orderDate?: string | null;
   customerName?: string;
   phone?: string;
@@ -163,12 +165,29 @@ export function NewTicketForm({
         <Card>
           <CardHeader title="Customer" />
           <div className="grid gap-3 p-4 sm:grid-cols-2">
-            <Field label="Name" htmlFor="customer_name"><input id="customer_name" name="customer_name" defaultValue={prefill.customerName} className="ds-input" /></Field>
-            <Field label="Mobile" htmlFor="phone"><input id="phone" name="phone" defaultValue={prefill.phone} inputMode="tel" className="ds-input" placeholder="10-digit mobile" /></Field>
-            <Field label="Alternate mobile" htmlFor="alt_phone"><input id="alt_phone" name="alt_phone" inputMode="tel" className="ds-input" /></Field>
+            {prefill.customerLocked ? (
+              <>
+                <input type="hidden" name="phone" value={prefill.phone ?? ""} />
+                <dl className="grid gap-x-6 gap-y-2 sm:col-span-2 sm:grid-cols-2">
+                  <div><dt className="ds-heading-xxsmall text-ds-text-subtle">Name</dt><dd>{prefill.customerName || "—"}</dd></div>
+                  <div><dt className="ds-heading-xxsmall text-ds-text-subtle">Mobile</dt><dd className="font-mono text-[13px]">{prefill.phone ? `+91 ${prefill.phone}` : "—"}</dd></div>
+                  <div className="sm:col-span-2"><dt className="ds-heading-xxsmall text-ds-text-subtle">Address</dt><dd>{[prefill.address, prefill.pincode].filter(Boolean).join(", ") || "—"}</dd></div>
+                </dl>
+                <p className="text-xs text-ds-text-subtlest sm:col-span-2">From the order data; these can’t be changed here.</p>
+              </>
+            ) : (
+              <>
+                <Field label="Name" htmlFor="customer_name"><input id="customer_name" name="customer_name" defaultValue={prefill.customerName} className="ds-input" /></Field>
+                <Field label="Mobile" htmlFor="phone"><input id="phone" name="phone" defaultValue={prefill.phone} inputMode="tel" className="ds-input" placeholder="10-digit mobile" /></Field>
+                <Field label="Address" htmlFor="address" className="sm:col-span-2"><input id="address" name="address" defaultValue={prefill.address} className="ds-input" /></Field>
+                <Field label="Pincode" htmlFor="pincode"><input id="pincode" name="pincode" defaultValue={prefill.pincode} inputMode="numeric" className="ds-input" /></Field>
+              </>
+            )}
+            <Field label="Alternate mobile" htmlFor="alt_phone"
+              hint="If the customer is calling from another number, add it only after validating the invoice / order details.">
+              <input id="alt_phone" name="alt_phone" inputMode="tel" className="ds-input" />
+            </Field>
             <Field label="Email" htmlFor="email"><input id="email" name="email" type="email" className="ds-input" /></Field>
-            <Field label="Address" htmlFor="address" className="sm:col-span-2"><input id="address" name="address" defaultValue={prefill.address} className="ds-input" /></Field>
-            <Field label="Pincode" htmlFor="pincode"><input id="pincode" name="pincode" defaultValue={prefill.pincode} inputMode="numeric" className="ds-input" /></Field>
           </div>
         </Card>
       </div>

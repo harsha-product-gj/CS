@@ -4,7 +4,7 @@ import type { Role } from "@/lib/auth";
 export type IconName =
   | "support" | "operations" | "insights" | "admin"
   | "search" | "tickets" | "followups" | "missed" | "resolutions" | "pickups" | "dispatches"
-  | "dashboard" | "users" | "data" | "alltickets" | "sla";
+  | "dashboard" | "users" | "data" | "alltickets" | "sla" | "roster" | "cover" | "approvals";
 
 export type NavItem = { label: string; href: string; icon: IconName; soon?: boolean };
 export type NavApp = {
@@ -30,7 +30,6 @@ export const APPS: NavApp[] = [
       { label: "Customer search", href: "/search", icon: "search" },
       { label: "My tickets", href: "/tickets", icon: "tickets" },
       { label: "All tickets", href: "/tickets/all", icon: "alltickets" },
-      { label: "Missed calls", href: "/missed-calls", icon: "missed", soon: true },
     ],
   },
   {
@@ -59,10 +58,15 @@ export const APPS: NavApp[] = [
     id: "admin",
     label: "Admin",
     icon: "admin",
-    href: "/admin/users",
+    href: "/admin/today",
     match: ["/admin"],
     roles: ["admin"],
     items: [
+      { label: "Team today", href: "/admin/today", icon: "dashboard" },
+      { label: "Roster", href: "/admin/roster", icon: "roster" },
+      { label: "Cover", href: "/admin/cover", icon: "cover" },
+      { label: "Approvals", href: "/admin/approvals", icon: "approvals" },
+      { label: "Missed calls", href: "/admin/missed-calls", icon: "missed" },
       { label: "Users", href: "/admin/users", icon: "users" },
       { label: "SLA settings", href: "/admin/sla", icon: "sla" },
       { label: "Order data", href: "/admin/data", icon: "data" },

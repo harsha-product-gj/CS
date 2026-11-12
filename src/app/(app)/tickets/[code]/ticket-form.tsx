@@ -136,12 +136,24 @@ export function TicketForm({ t, canEdit, isAdmin, staff }: { t: TicketFormData; 
         <Card>
           <CardHeader title="Customer" />
           <div className="grid gap-3 p-4 sm:grid-cols-2">
-            <Field label="Name" htmlFor="customer_name"><input id="customer_name" name="customer_name" defaultValue={t.customer_name ?? ""} className="ds-input" /></Field>
-            <Field label="Mobile" htmlFor="phone"><input id="phone" name="phone" defaultValue={t.phone ?? ""} inputMode="tel" className="ds-input" /></Field>
-            <Field label="Alternate mobile" htmlFor="alt_phone"><input id="alt_phone" name="alt_phone" defaultValue={t.alt_phone ?? ""} inputMode="tel" className="ds-input" /></Field>
+            {isAdmin ? (
+              <>
+                <Field label="Name" htmlFor="customer_name"><input id="customer_name" name="customer_name" defaultValue={t.customer_name ?? ""} className="ds-input" /></Field>
+                <Field label="Mobile" htmlFor="phone" hint="Admins only"><input id="phone" name="phone" defaultValue={t.phone ?? ""} inputMode="tel" className="ds-input" /></Field>
+                <Field label="Address" htmlFor="address" className="sm:col-span-2"><input id="address" name="address" defaultValue={t.address ?? ""} className="ds-input" /></Field>
+                <Field label="Pincode" htmlFor="pincode"><input id="pincode" name="pincode" defaultValue={t.pincode ?? ""} className="ds-input" /></Field>
+              </>
+            ) : (
+              <dl className="grid gap-x-6 gap-y-2 sm:col-span-2 sm:grid-cols-2">
+                <div><dt className="ds-heading-xxsmall text-ds-text-subtle">Name</dt><dd>{t.customer_name || "—"}</dd></div>
+                <div><dt className="ds-heading-xxsmall text-ds-text-subtle">Mobile</dt><dd className="font-mono text-[13px]">{t.phone ? `+91 ${t.phone}` : "—"}</dd></div>
+                <div className="sm:col-span-2"><dt className="ds-heading-xxsmall text-ds-text-subtle">Address</dt><dd>{[t.address, t.pincode].filter(Boolean).join(", ") || "—"}</dd></div>
+              </dl>
+            )}
+            <Field label="Alternate mobile" htmlFor="alt_phone" hint="Add a different number only after validating the invoice / order details.">
+              <input id="alt_phone" name="alt_phone" defaultValue={t.alt_phone ?? ""} inputMode="tel" className="ds-input" />
+            </Field>
             <Field label="Email" htmlFor="email"><input id="email" name="email" type="email" defaultValue={t.email ?? ""} className="ds-input" /></Field>
-            <Field label="Address" htmlFor="address" className="sm:col-span-2"><input id="address" name="address" defaultValue={t.address ?? ""} className="ds-input" /></Field>
-            <Field label="Pincode" htmlFor="pincode"><input id="pincode" name="pincode" defaultValue={t.pincode ?? ""} className="ds-input" /></Field>
           </div>
         </Card>
 

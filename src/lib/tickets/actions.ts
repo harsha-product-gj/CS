@@ -102,11 +102,23 @@ export async function createTicket(_: ActionState, f: FormData): Promise<ActionS
   const sla = await getSla();
   const client = db();
 
-  // Is the order in our data?
+  // Customer details come from the order data when we have them (agents can't edit them).
   let orderInData = false;
+  let customer = { customer_name: str(f, "customer_name"), phone, address: str(f, "address"), pincode: str(f, "pincode") };
+  const fromOrder = (o: { customer_name: string | null; phone: string | null; address_line1: string | null; address_line2: string | null; city: string | null; state: string | null; pincode: string | null }) => ({
+    customer_name: o.customer_name,
+    phone: o.phone ?? phone,
+    address: [o.address_line1, o.address_line2, o.city, o.state].filter(Boolean).join(", ") || null,
+    pincode: o.pincode,
+  });
+  const ORDER_CUSTOMER = "customer_name, phone, address_line1, address_line2, city, state, pincode";
   if (orderCode) {
-    const { data } = await client.from("orders").select("order_code").eq("order_code", orderCode).maybeSingle();
+    const { data } = await client.from("orders").select(ORDER_CUSTOMER).eq("order_code", orderCode).maybeSingle();
     orderInData = !!data;
+    if (data) customer = fromOrder(data);
+  } else if (phone) {
+    const { data } = await client.from("orders").select(ORDER_CUSTOMER).eq("phone", phone).order("order_date", { ascending: false }).limit(1).maybeSingle();
+    if (data) customer = fromOrder(data);
   }
 
   const parentCode = str(f, "parent_code");
@@ -129,12 +141,9 @@ export async function createTicket(_: ActionState, f: FormData): Promise<ActionS
     order_channel: channel,
     order_code: orderCode,
     order_in_data: orderInData,
-    customer_name: str(f, "customer_name"),
-    phone,
+    ...customer,
     alt_phone: normalizePhone(str(f, "alt_phone")),
     email,
-    address: str(f, "address"),
-    pincode: str(f, "pincode"),
     source,
     source_detail: sd.value,
     category,
@@ -225,13 +234,14 @@ export async function updateTicket(_: ActionState, f: FormData): Promise<ActionS
   const email = str(f, "email")?.toLowerCase() ?? null;
   if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return { error: "Email address looks wrong." };
 
+  const isAdmin = user.roles.includes("admin");
   const update: Record<string, unknown> = {
-    customer_name: str(f, "customer_name"),
-    phone,
+    // Name, mobile and address are fixed once the ticket exists; only an admin can correct them.
+    ...(isAdmin
+      ? { customer_name: str(f, "customer_name"), phone, address: str(f, "address"), pincode: str(f, "pincode") }
+      : {}),
     alt_phone: normalizePhone(str(f, "alt_phone")),
     email,
-    address: str(f, "address"),
-    pincode: str(f, "pincode"),
     source,
     source_detail: sd.value,
     category,
