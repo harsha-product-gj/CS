@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
-import { createUser, updateUser, type FormState } from "./actions";
+import { createUser, deleteUser, updateUser, type FormState } from "./actions";
 import { Button, Label, inputCls } from "@/components/ui";
 
 const ROLES = [
@@ -53,6 +53,25 @@ export function CreateUserForm() {
         <Button type="submit" disabled={pending}>{pending ? "Creating…" : "Create user"}</Button>
         <Msg s={state} />
       </div>
+    </form>
+  );
+}
+
+export function DeleteUserButton({ id, username }: { id: string; username: string }) {
+  const [state, action, pending] = useActionState<FormState, FormData>(deleteUser, {});
+  return (
+    <form
+      action={action}
+      onSubmit={(e) => {
+        if (!confirm(`Delete user "${username}"? This can't be undone.`)) e.preventDefault();
+      }}
+      className="flex items-center gap-2"
+    >
+      <input type="hidden" name="id" value={id} />
+      <Msg s={state} />
+      <Button type="submit" variant="danger" disabled={pending} className="px-2 py-1 text-xs">
+        {pending ? "Deleting…" : "Delete"}
+      </Button>
     </form>
   );
 }

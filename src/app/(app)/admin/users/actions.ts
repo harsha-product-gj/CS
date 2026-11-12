@@ -44,6 +44,25 @@ export async function createUser(_: FormState, form: FormData): Promise<FormStat
   return { ok: `Created ${username}.` };
 }
 
+export async function deleteUser(_: FormState, form: FormData): Promise<FormState> {
+  const admin = await requireUser("admin");
+  const id = String(form.get("id"));
+  if (id === admin.id) return { error: "You can't delete your own account." };
+
+  const { data: p } = await db().from("profiles").select("username, full_name, roles").eq("id", id).single();
+  if (!p) return { error: "User not found." };
+
+  // Users who have done work in the app must be kept for history; deactivate them instead.
+  const { count } = await db().from("audit_log").select("id", { count: "exact", head: true }).eq("changed_by", id);
+  if (count) return { error: `${p.username} has activity in the app. Untick "Active" instead so their history is kept.` };
+
+  const { error } = await db().auth.admin.deleteUser(id); // cascades to profiles
+  if (error) return { error: `Could not delete: ${error.message}` };
+  await audit(admin.id, id, "delete", { username: p.username, full_name: p.full_name, roles: p.roles });
+  revalidatePath("/admin/users");
+  return { ok: `Deleted ${p.username}.` };
+}
+
 export async function updateUser(_: FormState, form: FormData): Promise<FormState> {
   const admin = await requireUser("admin");
   const id = String(form.get("id"));

@@ -25,6 +25,7 @@ export type Item = {
   sku: string;
   item_name: string | null;
   color: string | null;
+  ean: string | null;
   facility: string | null;
   package_code: string | null;
   sale_order_status: string | null;
@@ -51,16 +52,19 @@ export type CustomerMatch = {
 const ORDER_COLS =
   "order_code, base_order_code, link_type, channel_name, order_channel, order_date, customer_name, phone, address_line1, address_line2, pincode, city, state, total_price, item_count, status";
 const ITEM_COLS =
-  "order_code, sku, item_name, color, facility, package_code, sale_order_status, tracking_number, dispatch_date, delivery_time, shipping_provider, selling_price, courier_status";
+  "order_code, sku, item_name, color, ean, facility, package_code, sale_order_status, tracking_number, dispatch_date, delivery_time, shipping_provider, selling_price, courier_status";
 
 /** A customer is identified by phone; orders without a phone stand alone (keyed by original order). */
 export const customerKey = (o: Pick<Order, "phone" | "order_code" | "base_order_code">) =>
   o.phone ? `p-${o.phone}` : `o-${o.base_order_code ?? o.order_code}`;
 
-export async function searchCustomers(q: string): Promise<CustomerMatch[]> {
-  const { data: hits, error } = await db().rpc("search_orders", { q, max_rows: 100 });
+export const SEARCH_LIMIT = 100;
+
+/** Customers matching the search, newest first. "truncated" = more orders matched than were fetched. */
+export async function searchCustomers(q: string): Promise<{ matches: CustomerMatch[]; truncated: boolean }> {
+  const { data: hits, error } = await db().rpc("search_orders", { q, max_rows: SEARCH_LIMIT });
   if (error) throw error;
-  if (!hits?.length) return [];
+  if (!hits?.length) return { matches: [], truncated: false };
   const matchedOn = new Map<string, string>(hits.map((h: { order_code: string; matched_on: string }) => [h.order_code, h.matched_on]));
   const { data: orders, error: e2 } = await db().from("orders").select(ORDER_COLS).in("order_code", [...matchedOn.keys()]);
   if (e2) throw e2;
@@ -79,7 +83,10 @@ export async function searchCustomers(q: string): Promise<CustomerMatch[]> {
     if (!g.channels.includes(o.order_channel)) g.channels.push(o.order_channel);
     groups.set(key, g);
   }
-  return [...groups.values()].sort((a, b) => (b.latest ?? "").localeCompare(a.latest ?? ""));
+  return {
+    matches: [...groups.values()].sort((a, b) => (b.latest ?? "").localeCompare(a.latest ?? "")),
+    truncated: hits.length >= SEARCH_LIMIT,
+  };
 }
 
 async function fetchOrders(filter: { column: string; values: string[] }): Promise<Order[]> {

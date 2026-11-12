@@ -2,10 +2,10 @@ import { requireUser } from "@/lib/auth";
 import { db } from "@/lib/supabase/server";
 import { Badge, Card } from "@/components/ui";
 import { fmtDate } from "@/lib/format";
-import { CreateUserForm, EditUserForm } from "./user-forms";
+import { CreateUserForm, DeleteUserButton, EditUserForm } from "./user-forms";
 
 export default async function UsersPage() {
-  await requireUser("admin");
+  const me = await requireUser("admin");
   const { data: users, error } = await db()
     .from("profiles")
     .select("id, username, full_name, roles, active, created_at")
@@ -32,6 +32,7 @@ export default async function UsersPage() {
               ))}
               {!u.active && <Badge tone="red">inactive</Badge>}
               <span className="ml-auto text-xs text-stone-400">added {fmtDate(u.created_at)}</span>
+              {u.id !== me.id && <DeleteUserButton id={u.id} username={u.username} />}
             </div>
             <EditUserForm user={u} />
           </Card>

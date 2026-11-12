@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { requireUser } from "@/lib/auth";
-import { searchCustomers } from "@/lib/orders/queries";
+import { searchCustomers, SEARCH_LIMIT } from "@/lib/orders/queries";
 import { Badge, Button, Card } from "@/components/ui";
 import { channelLabel, fmtDate } from "@/lib/format";
 
-const MATCH_LABEL: Record<string, string> = { phone: "Mobile", order: "Order ID", awb: "AWB", name: "Name" };
+const MATCH_LABEL: Record<string, string> = {
+  phone: "Mobile", order: "Order ID", awb: "AWB", name: "Name", ean: "ASIN / FSN", pincode: "Pincode",
+};
 
 export default async function SearchPage({ searchParams }: PageProps<"/search">) {
   await requireUser();
@@ -16,14 +18,16 @@ export default async function SearchPage({ searchParams }: PageProps<"/search">)
     return (
       <div className="py-16 text-center text-stone-500">
         <h1 className="mb-2 text-xl font-semibold text-stone-800">Find a customer</h1>
-        <p className="text-sm">Paste a mobile number, order ID, AWB / tracking number or customer name in the search bar.</p>
+        <p className="text-sm">
+          Search by mobile number, order ID, AWB / tracking number, customer name, ASIN / FSN, or a 6-digit pincode.
+        </p>
       </div>
     );
   }
 
   if (q.length < 3) return <p className="text-sm text-stone-500">Type at least 3 characters.</p>;
 
-  const matches = await searchCustomers(q);
+  const { matches, truncated } = await searchCustomers(q);
   if (matches.length === 1) redirect(`/customers/${encodeURIComponent(matches[0].key)}?q=${encodeURIComponent(q)}`);
 
   return (
@@ -31,6 +35,12 @@ export default async function SearchPage({ searchParams }: PageProps<"/search">)
       <h1 className="text-lg font-semibold">
         {matches.length ? `${matches.length} customers match "${q}"` : `No orders found for "${q}"`}
       </h1>
+
+      {truncated && (
+        <p className="text-sm text-stone-500">
+          Showing customers from the latest {SEARCH_LIMIT} matching orders. Add more detail to narrow it down.
+        </p>
+      )}
 
       {matches.length === 0 && (
         <Card className="p-5 text-sm text-stone-600">

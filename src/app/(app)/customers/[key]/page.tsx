@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { requireUser } from "@/lib/auth";
-import { getCustomer, type Item, type Order } from "@/lib/orders/queries";
+import { getCustomer, type Item, type Order, type OrderWithItems } from "@/lib/orders/queries";
 import { Badge, Button, Card } from "@/components/ui";
 import { channelLabel, fmtDate, fmtDateTime, fmtMoney } from "@/lib/format";
 
@@ -65,11 +65,27 @@ function OrderHeader({ o }: { o: Order }) {
   );
 }
 
-export default async function CustomerPage({ params }: PageProps<"/customers/[key]">) {
+/** True when the search text points at this order specifically (order ID, AWB or EAN), not just the customer. */
+function matchesSearch(o: Order & { items: Item[] }, q: string) {
+  const v = q.trim().toLowerCase();
+  if (!v) return false;
+  return (
+    o.order_code.toLowerCase() === v ||
+    o.items.some((i) => i.tracking_number?.toLowerCase() === v || i.ean?.toLowerCase() === v)
+  );
+}
+const groupMatches = (o: OrderWithItems, q: string) => matchesSearch(o, q) || o.linked.some((l) => matchesSearch(l, q));
+
+export default async function CustomerPage({ params, searchParams }: PageProps<"/customers/[key]">) {
   await requireUser();
   const { key } = await params;
+  const sp = await searchParams;
+  const q = typeof sp.q === "string" ? sp.q : "";
   const c = await getCustomer(decodeURIComponent(key));
   if (!c) notFound();
+  // Orders the search pointed at come first and are highlighted; the customer's other orders follow.
+  const orders = [...c.orders].sort((a, b) => Number(groupMatches(b, q)) - Number(groupMatches(a, q)));
+  const matchedCount = orders.filter((o) => groupMatches(o, q)).length;
 
   return (
     <div className="grid gap-6 lg:grid-cols-[300px_1fr]">
@@ -99,8 +115,22 @@ export default async function CustomerPage({ params }: PageProps<"/customers/[ke
       </aside>
 
       <div className="space-y-4">
-        {c.orders.map((o) => (
-          <Card key={o.order_code} className="p-4">
+        {matchedCount > 0 && c.orders.length > matchedCount && (
+          <p className="text-sm text-stone-500">
+            Showing the order you searched for first, then this customer’s {c.orders.length - matchedCount} other order
+            {c.orders.length - matchedCount === 1 ? "" : "s"}.
+          </p>
+        )}
+        {orders.map((o) => (
+          <Card
+            key={o.order_code}
+            className={`p-4 ${groupMatches(o, q) ? "border-indigo-400 ring-2 ring-indigo-100" : ""}`}
+          >
+            {groupMatches(o, q) && (
+              <div className="mb-2">
+                <Badge tone="indigo">Searched order</Badge>
+              </div>
+            )}
             <OrderHeader o={o} />
             <div className="mt-3">
               <Items items={o.items} />
