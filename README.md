@@ -33,3 +33,12 @@ Import the GitHub repo in Vercel and add these environment variables:
 - All data access is server-side with the service-role key. Row-level security is on with no policies, so browser keys can't read anything.
 - `data/` holds local exports with customer PII and is git-ignored.
 - Order channel mapping and linking of replacement shipments live in `src/lib/orders/transform.ts`.
+
+## Design system
+
+The UI follows the **Intellsys** design system (Atlassian `--ds-*` tokens):
+
+- Tokens: `design/intellsys-tokens.json`. Run `npm run tokens` to regenerate `src/app/tokens.css`.
+- Tailwind utilities map to the tokens: `bg-ds-surface`, `text-ds-text-subtle`, `border-ds-border`, `rounded-ds-medium`, `shadow-ds-overlay`.
+- Primitives live in `src/components/ui.tsx` (Button, Badge/lozenge, Card, PageHeader, EmptyState). The `.ds-table` / `.ds-input` classes are in `globals.css`.
+- The shell has an app rail plus a module sidebar on the left (`src/lib/nav.ts` defines apps and modules) and a top bar. On mobile the rail becomes a bottom tab bar.

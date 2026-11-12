@@ -1,0 +1,1466 @@
+{
+ "name": "Intellsys",
+ "version": 1,
+ "meta": {
+  "source": "Live CSS of the logged-in app at intellsys.ai, captured 2026-10-22 (Atlassian Design System token set, --ds-*)."
+ },
+ "color": {
+  "themes": [
+   {
+    "id": "light",
+    "name": "Light"
+   },
+   {
+    "id": "dark",
+    "name": "Dark"
+   }
+  ],
+  "tokens": [
+   {
+    "name": "ds-text",
+    "value": {
+     "light": "#292a2e",
+     "dark": "#bfc1c4"
+    },
+    "usage": "Default text: body copy, headings, table cells. On surface."
+   },
+   {
+    "name": "ds-text-subtle",
+    "value": {
+     "light": "#505258",
+     "dark": "#a9abaf"
+    },
+    "usage": "Secondary text: nav items, button labels, table headers."
+   },
+   {
+    "name": "ds-text-subtlest",
+    "value": {
+     "light": "#6b6e76",
+     "dark": "#96999e"
+    },
+    "usage": "Tertiary text: helper copy, timestamps, placeholders, empty cells."
+   },
+   {
+    "name": "ds-text-disabled",
+    "value": {
+     "light": "#080f214a",
+     "dark": "#e5e9f640"
+    },
+    "usage": "Text in disabled controls only. Not for readable content."
+   },
+   {
+    "name": "ds-text-inverse",
+    "value": {
+     "light": "#ffffff",
+     "dark": "#1f1f21"
+    },
+    "usage": "Text on bold fills: primary button, bold lozenges."
+   },
+   {
+    "name": "ds-text-selected",
+    "value": {
+     "light": "#1868db",
+     "dark": "#669df1"
+    },
+    "usage": "Text of the selected item: active side-nav link, selected filter chip."
+   },
+   {
+    "name": "ds-text-brand",
+    "value": {
+     "light": "#1868db",
+     "dark": "#669df1"
+    },
+    "usage": "Brand-blue text, e.g. the greeting name on the dashboard."
+   },
+   {
+    "name": "ds-text-danger",
+    "value": {
+     "light": "#ae2e24",
+     "dark": "#fd9891"
+    },
+    "usage": "Text for danger messages and states."
+   },
+   {
+    "name": "ds-text-warning",
+    "value": {
+     "light": "#9e4c00",
+     "dark": "#fbc828"
+    },
+    "usage": "Text for warning messages and states."
+   },
+   {
+    "name": "ds-text-success",
+    "value": {
+     "light": "#4c6b1f",
+     "dark": "#b3df72"
+    },
+    "usage": "Text for success messages and states."
+   },
+   {
+    "name": "ds-text-discovery",
+    "value": {
+     "light": "#803fa5",
+     "dark": "#d8a0f7"
+    },
+    "usage": "Text for discovery messages and states."
+   },
+   {
+    "name": "ds-text-information",
+    "value": {
+     "light": "#1558bc",
+     "dark": "#8fb8f6"
+    },
+    "usage": "Text for information messages and states."
+   },
+   {
+    "name": "ds-link",
+    "value": {
+     "light": "#1868db",
+     "dark": "#669df1"
+    },
+    "usage": "Inline links and linked table cells."
+   },
+   {
+    "name": "ds-link-pressed",
+    "value": {
+     "light": "#1558bc",
+     "dark": "#8fb8f6"
+    },
+    "usage": "Link while pressed."
+   },
+   {
+    "name": "ds-link-visited",
+    "value": {
+     "light": "#803fa5",
+     "dark": "#d8a0f7"
+    },
+    "usage": "Visited link."
+   },
+   {
+    "name": "ds-icon",
+    "value": {
+     "light": "#292a2e",
+     "dark": "#cecfd2"
+    },
+    "usage": "Default icon colour."
+   },
+   {
+    "name": "ds-icon-subtle",
+    "value": {
+     "light": "#505258",
+     "dark": "#a9abaf"
+    },
+    "usage": "Icons inside subtle buttons and nav."
+   },
+   {
+    "name": "ds-icon-subtlest",
+    "value": {
+     "light": "#6b6e76",
+     "dark": "#96999e"
+    },
+    "usage": "Low-emphasis icons: inactive sort arrows, pagination arrows."
+   },
+   {
+    "name": "ds-icon-brand",
+    "value": {
+     "light": "#1868db",
+     "dark": "#669df1"
+    },
+    "usage": "icon-brand"
+   },
+   {
+    "name": "ds-icon-danger",
+    "value": {
+     "light": "#c9372c",
+     "dark": "#f15b50"
+    },
+    "usage": "Icon for danger messages and states."
+   },
+   {
+    "name": "ds-icon-warning",
+    "value": {
+     "light": "#e06c00",
+     "dark": "#fbc828"
+    },
+    "usage": "Icon for warning messages and states."
+   },
+   {
+    "name": "ds-icon-success",
+    "value": {
+     "light": "#6a9a23",
+     "dark": "#b3df72"
+    },
+    "usage": "Icon for success messages and states."
+   },
+   {
+    "name": "ds-icon-discovery",
+    "value": {
+     "light": "#af59e1",
+     "dark": "#bf63f3"
+    },
+    "usage": "Icon for discovery messages and states."
+   },
+   {
+    "name": "ds-icon-information",
+    "value": {
+     "light": "#357de8",
+     "dark": "#4688ec"
+    },
+    "usage": "Icon for information messages and states."
+   },
+   {
+    "name": "ds-border",
+    "value": {
+     "light": "#0b120e24",
+     "dark": "#e3e4f21f"
+    },
+    "usage": "Default hairline: cards, table grid, dividers, outlined buttons."
+   },
+   {
+    "name": "ds-border-bold",
+    "value": {
+     "light": "#7d818a",
+     "dark": "#7e8188"
+    },
+    "usage": "Stronger divider where border is too faint."
+   },
+   {
+    "name": "ds-border-input",
+    "value": {
+     "light": "#8c8f97",
+     "dark": "#7e8188"
+    },
+    "usage": "Text field and select outline at rest (3:1 on surface)."
+   },
+   {
+    "name": "ds-border-focused",
+    "value": {
+     "light": "#4688ec",
+     "dark": "#8fb8f6"
+    },
+    "usage": "Focus ring, 2px. Also the current-page outline in pagination."
+   },
+   {
+    "name": "ds-border-selected",
+    "value": {
+     "light": "#1868db",
+     "dark": "#669df1"
+    },
+    "usage": "Outline of a selected row, card or tab."
+   },
+   {
+    "name": "ds-border-brand",
+    "value": {
+     "light": "#1868db",
+     "dark": "#669df1"
+    },
+    "usage": "border-brand"
+   },
+   {
+    "name": "ds-border-disabled",
+    "value": {
+     "light": "#0515240f",
+     "dark": "#ceced912"
+    },
+    "usage": "border-disabled"
+   },
+   {
+    "name": "ds-border-danger",
+    "value": {
+     "light": "#e2483d",
+     "dark": "#f15b50"
+    },
+    "usage": "Border for danger messages and states."
+   },
+   {
+    "name": "ds-border-warning",
+    "value": {
+     "light": "#e06c00",
+     "dark": "#f68909"
+    },
+    "usage": "Border for warning messages and states."
+   },
+   {
+    "name": "ds-border-success",
+    "value": {
+     "light": "#6a9a23",
+     "dark": "#82b536"
+    },
+    "usage": "Border for success messages and states."
+   },
+   {
+    "name": "ds-border-discovery",
+    "value": {
+     "light": "#af59e1",
+     "dark": "#bf63f3"
+    },
+    "usage": "Border for discovery messages and states."
+   },
+   {
+    "name": "ds-border-information",
+    "value": {
+     "light": "#357de8",
+     "dark": "#4688ec"
+    },
+    "usage": "Border for information messages and states."
+   },
+   {
+    "name": "ds-surface",
+    "value": {
+     "light": "#ffffff",
+     "dark": "#1f1f21"
+    },
+    "usage": "Page and card background; table rows; side nav."
+   },
+   {
+    "name": "ds-surface-hovered",
+    "value": {
+     "light": "#f0f1f2",
+     "dark": "#242528"
+    },
+    "usage": "Hovered row or card on surface."
+   },
+   {
+    "name": "ds-surface-pressed",
+    "value": {
+     "light": "#dddee1",
+     "dark": "#2b2c2f"
+    },
+    "usage": "Pressed row or card on surface."
+   },
+   {
+    "name": "ds-surface-sunken",
+    "value": {
+     "light": "#f8f8f8",
+     "dark": "#18191a"
+    },
+    "usage": "Recessed areas: kanban columns, page wells."
+   },
+   {
+    "name": "ds-surface-raised",
+    "value": {
+     "light": "#ffffff",
+     "dark": "#242528"
+    },
+    "usage": "Cards that lift on hover or drag; pair with ds-shadow-raised."
+   },
+   {
+    "name": "ds-surface-overlay",
+    "value": {
+     "light": "#ffffff",
+     "dark": "#2b2c2f"
+    },
+    "usage": "Menus, popovers, modals; pair with ds-shadow-overlay."
+   },
+   {
+    "name": "ds-background-input",
+    "value": {
+     "light": "#ffffff",
+     "dark": "#242528"
+    },
+    "usage": "Text field fill at rest."
+   },
+   {
+    "name": "ds-background-input-hovered",
+    "value": {
+     "light": "#f8f8f8",
+     "dark": "#2b2c2f"
+    },
+    "usage": "Text field fill on hover."
+   },
+   {
+    "name": "ds-background-disabled",
+    "value": {
+     "light": "#0515240f",
+     "dark": "#bdbdbd0a"
+    },
+    "usage": "Disabled control fill."
+   },
+   {
+    "name": "ds-background-neutral",
+    "value": {
+     "light": "#0515240f",
+     "dark": "#ceced912"
+    },
+    "usage": "Default (secondary) button fill; neutral lozenge."
+   },
+   {
+    "name": "ds-background-neutral-hovered",
+    "value": {
+     "light": "#0b120e24",
+     "dark": "#e3e4f21f"
+    },
+    "usage": "Default button hover."
+   },
+   {
+    "name": "ds-background-neutral-pressed",
+    "value": {
+     "light": "#080f214a",
+     "dark": "#e5e9f640"
+    },
+    "usage": "Default button pressed."
+   },
+   {
+    "name": "ds-background-neutral-subtle-hovered",
+    "value": {
+     "light": "#0515240f",
+     "dark": "#ceced912"
+    },
+    "usage": "Subtle (ghost) button and table-row hover."
+   },
+   {
+    "name": "ds-background-neutral-subtle-pressed",
+    "value": {
+     "light": "#0b120e24",
+     "dark": "#e3e4f21f"
+    },
+    "usage": "Subtle (ghost) button pressed."
+   },
+   {
+    "name": "ds-background-neutral-bold",
+    "value": {
+     "light": "#292a2e",
+     "dark": "#cecfd2"
+    },
+    "usage": "Dark neutral fill: tooltips, bold neutral lozenge."
+   },
+   {
+    "name": "ds-background-neutral-bold-hovered",
+    "value": {
+     "light": "#3b3d42",
+     "dark": "#bfc1c4"
+    },
+    "usage": "background-neutral-bold-hovered"
+   },
+   {
+    "name": "ds-background-selected",
+    "value": {
+     "light": "#e9f2fe",
+     "dark": "#1c2b42"
+    },
+    "usage": "Selected state fill: active nav rail item, applied filter chip, date range button, selected row."
+   },
+   {
+    "name": "ds-background-selected-hovered",
+    "value": {
+     "light": "#cfe1fd",
+     "dark": "#123263"
+    },
+    "usage": "Hover on a selected item."
+   },
+   {
+    "name": "ds-background-selected-bold",
+    "value": {
+     "light": "#1868db",
+     "dark": "#669df1"
+    },
+    "usage": "Checked checkbox, on toggle."
+   },
+   {
+    "name": "ds-background-brand-subtlest",
+    "value": {
+     "light": "#e9f2fe",
+     "dark": "#1c2b42"
+    },
+    "usage": "Light brand wash for highlights and onboarding."
+   },
+   {
+    "name": "ds-background-brand-bold",
+    "value": {
+     "light": "#1868db",
+     "dark": "#669df1"
+    },
+    "usage": "Primary button fill. One per view."
+   },
+   {
+    "name": "ds-background-brand-bold-hovered",
+    "value": {
+     "light": "#1558bc",
+     "dark": "#8fb8f6"
+    },
+    "usage": "Primary button hover."
+   },
+   {
+    "name": "ds-background-brand-bold-pressed",
+    "value": {
+     "light": "#144794",
+     "dark": "#cfe1fd"
+    },
+    "usage": "Primary button pressed."
+   },
+   {
+    "name": "ds-background-brand-boldest",
+    "value": {
+     "light": "#1c2b42",
+     "dark": "#e9f2fe"
+    },
+    "usage": "Deepest brand navy, for dark brand panels."
+   },
+   {
+    "name": "ds-background-danger",
+    "value": {
+     "light": "#ffeceb",
+     "dark": "#42221f"
+    },
+    "usage": "Subtle fill for danger banners, lozenges and buttons."
+   },
+   {
+    "name": "ds-background-danger-bold",
+    "value": {
+     "light": "#c9372c",
+     "dark": "#f87168"
+    },
+    "usage": "Bold fill for danger banners, lozenges and buttons."
+   },
+   {
+    "name": "ds-background-danger-bold-hovered",
+    "value": {
+     "light": "#ae2e24",
+     "dark": "#fd9891"
+    },
+    "usage": "Bold fill for danger banners, lozenges and buttons (hover)."
+   },
+   {
+    "name": "ds-background-warning",
+    "value": {
+     "light": "#fff5db",
+     "dark": "#3a2c1f"
+    },
+    "usage": "Subtle fill for warning banners, lozenges and buttons."
+   },
+   {
+    "name": "ds-background-warning-bold",
+    "value": {
+     "light": "#fbc828",
+     "dark": "#fbc828"
+    },
+    "usage": "Bold fill for warning banners, lozenges and buttons."
+   },
+   {
+    "name": "ds-background-warning-bold-hovered",
+    "value": {
+     "light": "#fca700",
+     "dark": "#fca700"
+    },
+    "usage": "Bold fill for warning banners, lozenges and buttons (hover)."
+   },
+   {
+    "name": "ds-background-success",
+    "value": {
+     "light": "#efffd6",
+     "dark": "#28311b"
+    },
+    "usage": "Subtle fill for success banners, lozenges and buttons."
+   },
+   {
+    "name": "ds-background-success-bold",
+    "value": {
+     "light": "#5b7f24",
+     "dark": "#94c748"
+    },
+    "usage": "Bold fill for success banners, lozenges and buttons."
+   },
+   {
+    "name": "ds-background-success-bold-hovered",
+    "value": {
+     "light": "#4c6b1f",
+     "dark": "#b3df72"
+    },
+    "usage": "Bold fill for success banners, lozenges and buttons (hover)."
+   },
+   {
+    "name": "ds-background-discovery",
+    "value": {
+     "light": "#f8eefe",
+     "dark": "#35243f"
+    },
+    "usage": "Subtle fill for discovery banners, lozenges and buttons."
+   },
+   {
+    "name": "ds-background-discovery-bold",
+    "value": {
+     "light": "#964ac0",
+     "dark": "#c97cf4"
+    },
+    "usage": "Bold fill for discovery banners, lozenges and buttons."
+   },
+   {
+    "name": "ds-background-discovery-bold-hovered",
+    "value": {
+     "light": "#803fa5",
+     "dark": "#d8a0f7"
+    },
+    "usage": "Bold fill for discovery banners, lozenges and buttons (hover)."
+   },
+   {
+    "name": "ds-background-information",
+    "value": {
+     "light": "#e9f2fe",
+     "dark": "#1c2b42"
+    },
+    "usage": "Subtle fill for information banners, lozenges and buttons."
+   },
+   {
+    "name": "ds-background-information-bold",
+    "value": {
+     "light": "#1868db",
+     "dark": "#669df1"
+    },
+    "usage": "Bold fill for information banners, lozenges and buttons."
+   },
+   {
+    "name": "ds-background-information-bold-hovered",
+    "value": {
+     "light": "#1558bc",
+     "dark": "#8fb8f6"
+    },
+    "usage": "Bold fill for information banners, lozenges and buttons (hover)."
+   },
+   {
+    "name": "ds-background-accent-lime-subtlest",
+    "value": {
+     "light": "#efffd6",
+     "dark": "#28311b"
+    },
+    "usage": "Decorative lime fill, subtlest step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-lime; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-lime-subtler",
+    "value": {
+     "light": "#d3f1a7",
+     "dark": "#37471f"
+    },
+    "usage": "Decorative lime fill, subtler step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-lime; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-lime-subtle",
+    "value": {
+     "light": "#94c748",
+     "dark": "#4c6b1f"
+    },
+    "usage": "Decorative lime fill, subtle step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-lime; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-lime-bolder",
+    "value": {
+     "light": "#5b7f24",
+     "dark": "#94c748"
+    },
+    "usage": "Decorative lime fill, bolder step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-lime; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-red-subtlest",
+    "value": {
+     "light": "#ffeceb",
+     "dark": "#42221f"
+    },
+    "usage": "Decorative red fill, subtlest step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-red; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-red-subtler",
+    "value": {
+     "light": "#ffd5d2",
+     "dark": "#5d1f1a"
+    },
+    "usage": "Decorative red fill, subtler step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-red; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-red-subtle",
+    "value": {
+     "light": "#f87168",
+     "dark": "#ae2e24"
+    },
+    "usage": "Decorative red fill, subtle step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-red; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-red-bolder",
+    "value": {
+     "light": "#c9372c",
+     "dark": "#f87168"
+    },
+    "usage": "Decorative red fill, bolder step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-red; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-orange-subtlest",
+    "value": {
+     "light": "#fff5db",
+     "dark": "#3a2c1f"
+    },
+    "usage": "Decorative orange fill, subtlest step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-orange; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-orange-subtler",
+    "value": {
+     "light": "#fce4a6",
+     "dark": "#693200"
+    },
+    "usage": "Decorative orange fill, subtler step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-orange; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-orange-subtle",
+    "value": {
+     "light": "#fca700",
+     "dark": "#9e4c00"
+    },
+    "usage": "Decorative orange fill, subtle step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-orange; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-orange-bolder",
+    "value": {
+     "light": "#bd5b00",
+     "dark": "#fca700"
+    },
+    "usage": "Decorative orange fill, bolder step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-orange; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-yellow-subtlest",
+    "value": {
+     "light": "#fef7c8",
+     "dark": "#332e1b"
+    },
+    "usage": "Decorative yellow fill, subtlest step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-yellow; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-yellow-subtler",
+    "value": {
+     "light": "#f5e989",
+     "dark": "#533f04"
+    },
+    "usage": "Decorative yellow fill, subtler step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-yellow; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-yellow-subtle",
+    "value": {
+     "light": "#eed12b",
+     "dark": "#7f5f01"
+    },
+    "usage": "Decorative yellow fill, subtle step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-yellow; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-yellow-bolder",
+    "value": {
+     "light": "#946f00",
+     "dark": "#ddb30e"
+    },
+    "usage": "Decorative yellow fill, bolder step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-yellow; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-green-subtlest",
+    "value": {
+     "light": "#dcfff1",
+     "dark": "#1c3329"
+    },
+    "usage": "Decorative green fill, subtlest step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-green; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-green-subtler",
+    "value": {
+     "light": "#baf3db",
+     "dark": "#164b35"
+    },
+    "usage": "Decorative green fill, subtler step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-green; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-green-subtle",
+    "value": {
+     "light": "#4bce97",
+     "dark": "#216e4e"
+    },
+    "usage": "Decorative green fill, subtle step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-green; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-green-bolder",
+    "value": {
+     "light": "#1f845a",
+     "dark": "#4bce97"
+    },
+    "usage": "Decorative green fill, bolder step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-green; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-teal-subtlest",
+    "value": {
+     "light": "#e7f9ff",
+     "dark": "#1e3137"
+    },
+    "usage": "Decorative teal fill, subtlest step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-teal; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-teal-subtler",
+    "value": {
+     "light": "#c6edfb",
+     "dark": "#164555"
+    },
+    "usage": "Decorative teal fill, subtler step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-teal; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-teal-subtle",
+    "value": {
+     "light": "#6cc3e0",
+     "dark": "#206a83"
+    },
+    "usage": "Decorative teal fill, subtle step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-teal; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-teal-bolder",
+    "value": {
+     "light": "#227d9b",
+     "dark": "#6cc3e0"
+    },
+    "usage": "Decorative teal fill, bolder step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-teal; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-blue-subtlest",
+    "value": {
+     "light": "#e9f2fe",
+     "dark": "#1c2b42"
+    },
+    "usage": "Decorative blue fill, subtlest step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-blue; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-blue-subtler",
+    "value": {
+     "light": "#cfe1fd",
+     "dark": "#123263"
+    },
+    "usage": "Decorative blue fill, subtler step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-blue; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-blue-subtle",
+    "value": {
+     "light": "#669df1",
+     "dark": "#1558bc"
+    },
+    "usage": "Decorative blue fill, subtle step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-blue; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-blue-bolder",
+    "value": {
+     "light": "#1868db",
+     "dark": "#669df1"
+    },
+    "usage": "Decorative blue fill, bolder step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-blue; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-purple-subtlest",
+    "value": {
+     "light": "#f8eefe",
+     "dark": "#35243f"
+    },
+    "usage": "Decorative purple fill, subtlest step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-purple; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-purple-subtler",
+    "value": {
+     "light": "#eed7fc",
+     "dark": "#48245d"
+    },
+    "usage": "Decorative purple fill, subtler step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-purple; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-purple-subtle",
+    "value": {
+     "light": "#c97cf4",
+     "dark": "#803fa5"
+    },
+    "usage": "Decorative purple fill, subtle step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-purple; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-purple-bolder",
+    "value": {
+     "light": "#964ac0",
+     "dark": "#c97cf4"
+    },
+    "usage": "Decorative purple fill, bolder step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-purple; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-magenta-subtlest",
+    "value": {
+     "light": "#ffecf8",
+     "dark": "#3d2232"
+    },
+    "usage": "Decorative magenta fill, subtlest step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-magenta; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-magenta-subtler",
+    "value": {
+     "light": "#fdd0ec",
+     "dark": "#50253f"
+    },
+    "usage": "Decorative magenta fill, subtler step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-magenta; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-magenta-subtle",
+    "value": {
+     "light": "#e774bb",
+     "dark": "#943d73"
+    },
+    "usage": "Decorative magenta fill, subtle step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-magenta; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-magenta-bolder",
+    "value": {
+     "light": "#ae4787",
+     "dark": "#e774bb"
+    },
+    "usage": "Decorative magenta fill, bolder step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-magenta; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-gray-subtlest",
+    "value": {
+     "light": "#f0f1f2",
+     "dark": "#303134"
+    },
+    "usage": "Decorative gray fill, subtlest step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-gray; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-gray-subtler",
+    "value": {
+     "light": "#dddee1",
+     "dark": "#4b4d51"
+    },
+    "usage": "Decorative gray fill, subtler step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-gray; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-gray-subtle",
+    "value": {
+     "light": "#8c8f97",
+     "dark": "#63666b"
+    },
+    "usage": "Decorative gray fill, subtle step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-gray; bolder with text-inverse."
+   },
+   {
+    "name": "ds-background-accent-gray-bolder",
+    "value": {
+     "light": "#6b6e76",
+     "dark": "#96999e"
+    },
+    "usage": "Decorative gray fill, bolder step: tags, avatars, funnel bars. Pair subtlest/subtler with text-accent-gray; bolder with text-inverse."
+   },
+   {
+    "name": "ds-text-accent-lime",
+    "value": {
+     "light": "#4c6b1f",
+     "dark": "#b3df72"
+    },
+    "usage": "Lime text on background-accent-lime-subtlest/subtler."
+   },
+   {
+    "name": "ds-text-accent-red",
+    "value": {
+     "light": "#ae2e24",
+     "dark": "#fd9891"
+    },
+    "usage": "Red text on background-accent-red-subtlest/subtler."
+   },
+   {
+    "name": "ds-text-accent-orange",
+    "value": {
+     "light": "#9e4c00",
+     "dark": "#fbc828"
+    },
+    "usage": "Orange text on background-accent-orange-subtlest/subtler."
+   },
+   {
+    "name": "ds-text-accent-yellow",
+    "value": {
+     "light": "#7f5f01",
+     "dark": "#eed12b"
+    },
+    "usage": "Yellow text on background-accent-yellow-subtlest/subtler."
+   },
+   {
+    "name": "ds-text-accent-green",
+    "value": {
+     "light": "#216e4e",
+     "dark": "#7ee2b8"
+    },
+    "usage": "Green text on background-accent-green-subtlest/subtler."
+   },
+   {
+    "name": "ds-text-accent-teal",
+    "value": {
+     "light": "#206a83",
+     "dark": "#9dd9ee"
+    },
+    "usage": "Teal text on background-accent-teal-subtlest/subtler."
+   },
+   {
+    "name": "ds-text-accent-blue",
+    "value": {
+     "light": "#1558bc",
+     "dark": "#8fb8f6"
+    },
+    "usage": "Blue text on background-accent-blue-subtlest/subtler."
+   },
+   {
+    "name": "ds-text-accent-purple",
+    "value": {
+     "light": "#803fa5",
+     "dark": "#d8a0f7"
+    },
+    "usage": "Purple text on background-accent-purple-subtlest/subtler."
+   },
+   {
+    "name": "ds-text-accent-magenta",
+    "value": {
+     "light": "#943d73",
+     "dark": "#f797d2"
+    },
+    "usage": "Magenta text on background-accent-magenta-subtlest/subtler."
+   },
+   {
+    "name": "ds-text-accent-gray",
+    "value": {
+     "light": "#505258",
+     "dark": "#a9abaf"
+    },
+    "usage": "Gray text on background-accent-gray-subtlest/subtler."
+   },
+   {
+    "name": "ds-chart-categorical-1",
+    "value": {
+     "light": "#357de8",
+     "dark": "#4688ec"
+    },
+    "usage": "Chart series 1 of 8, in this order."
+   },
+   {
+    "name": "ds-chart-categorical-2",
+    "value": {
+     "light": "#82b536",
+     "dark": "#94c748"
+    },
+    "usage": "Chart series 2 of 8, in this order."
+   },
+   {
+    "name": "ds-chart-categorical-3",
+    "value": {
+     "light": "#bf63f3",
+     "dark": "#c97cf4"
+    },
+    "usage": "Chart series 3 of 8, in this order."
+   },
+   {
+    "name": "ds-chart-categorical-4",
+    "value": {
+     "light": "#f68909",
+     "dark": "#fca700"
+    },
+    "usage": "Chart series 4 of 8, in this order."
+   },
+   {
+    "name": "ds-chart-categorical-5",
+    "value": {
+     "light": "#1558bc",
+     "dark": "#1558bc"
+    },
+    "usage": "Chart series 5 of 8, in this order."
+   },
+   {
+    "name": "ds-chart-categorical-6",
+    "value": {
+     "light": "#964ac0",
+     "dark": "#964ac0"
+    },
+    "usage": "Chart series 6 of 8, in this order."
+   },
+   {
+    "name": "ds-chart-categorical-7",
+    "value": {
+     "light": "#42b2d7",
+     "dark": "#42b2d7"
+    },
+    "usage": "Chart series 7 of 8, in this order."
+   },
+   {
+    "name": "ds-chart-categorical-8",
+    "value": {
+     "light": "#bd5b00",
+     "dark": "#e06c00"
+    },
+    "usage": "Chart series 8 of 8, in this order."
+   },
+   {
+    "name": "ds-chart-neutral",
+    "value": {
+     "light": "#8c8f97",
+     "dark": "#7e8188"
+    },
+    "usage": "Chart series for \"other\" or baselines."
+   },
+   {
+    "name": "ds-blanket",
+    "value": {
+     "light": "#050c1f75",
+     "dark": "#10121499"
+    },
+    "usage": "Scrim behind modals and drawers."
+   },
+   {
+    "name": "ds-skeleton",
+    "value": {
+     "light": "#0515240f",
+     "dark": "#ceced912"
+    },
+    "usage": "Loading skeleton blocks."
+   }
+  ]
+ },
+ "type": {
+  "fonts": [],
+  "families": {
+   "sans": "\"Atlassian Sans\", ui-sans-serif, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Ubuntu, \"Helvetica Neue\", sans-serif",
+   "table": "Inter, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+   "mono": "\"Atlassian Mono\", ui-monospace, Menlo, \"Segoe UI Mono\", \"Ubuntu Mono\", monospace"
+  },
+  "groups": [
+   {
+    "name": "Headings",
+    "family": "sans",
+    "styles": [
+     {
+      "name": "heading-xxlarge",
+      "fontSize": "2rem",
+      "lineHeight": "2.25rem",
+      "fontWeight": 653,
+      "usage": "Greeting on home (Hi, Harsha).",
+      "sample": "Hi, Harsha"
+     },
+     {
+      "name": "heading-xlarge",
+      "fontSize": "1.75rem",
+      "lineHeight": "2rem",
+      "fontWeight": 653,
+      "usage": "Rare. Large empty-state titles."
+     },
+     {
+      "name": "heading-large",
+      "fontSize": "1.5rem",
+      "lineHeight": "1.75rem",
+      "fontWeight": 653,
+      "usage": "Page titles (Leads, Performance dashboard) and dashboard section titles.",
+      "sample": "Performance dashboard"
+     },
+     {
+      "name": "heading-medium",
+      "fontSize": "1.25rem",
+      "lineHeight": "1.5rem",
+      "fontWeight": 653,
+      "usage": "Modal and drawer titles."
+     },
+     {
+      "name": "heading-small",
+      "fontSize": "1rem",
+      "lineHeight": "1.25rem",
+      "fontWeight": 653,
+      "usage": "Card and chart titles."
+     },
+     {
+      "name": "heading-xsmall",
+      "fontSize": "0.875rem",
+      "lineHeight": "1.25rem",
+      "fontWeight": 653,
+      "usage": "Sub-section labels inside cards.",
+      "sample": "Lead to Conversion Funnel"
+     },
+     {
+      "name": "heading-xxsmall",
+      "fontSize": "0.75rem",
+      "lineHeight": "1rem",
+      "fontWeight": 653,
+      "usage": "Table column headers, overline labels.",
+      "sample": "Customer Name"
+     }
+    ]
+   },
+   {
+    "name": "Body",
+    "family": "sans",
+    "styles": [
+     {
+      "name": "body-large",
+      "fontSize": "1rem",
+      "lineHeight": "1.5rem",
+      "fontWeight": 400,
+      "usage": "Long-form copy, onboarding."
+     },
+     {
+      "name": "body",
+      "fontSize": "0.875rem",
+      "lineHeight": "1.25rem",
+      "fontWeight": 400,
+      "usage": "Default UI text: buttons, inputs, nav, cells.",
+      "sample": "Track your business progress here!"
+     },
+     {
+      "name": "body-small",
+      "fontSize": "0.75rem",
+      "lineHeight": "1rem",
+      "fontWeight": 400,
+      "usage": "Captions, helper text, KPI labels.",
+      "sample": "Total Leads"
+     }
+    ]
+   },
+   {
+    "name": "Metrics",
+    "family": "sans",
+    "styles": [
+     {
+      "name": "metric-large",
+      "fontSize": "1.75rem",
+      "lineHeight": "2rem",
+      "fontWeight": 653,
+      "usage": "KPI tile values.",
+      "sample": "12,999"
+     },
+     {
+      "name": "metric-medium",
+      "fontSize": "1.5rem",
+      "lineHeight": "1.75rem",
+      "fontWeight": 653,
+      "usage": "Secondary KPI values.",
+      "sample": "28,464"
+     },
+     {
+      "name": "metric-small",
+      "fontSize": "1rem",
+      "lineHeight": "1.25rem",
+      "fontWeight": 653,
+      "usage": "Inline metrics in tables and lozenges.",
+      "sample": "54,212"
+     }
+    ]
+   },
+   {
+    "name": "Table",
+    "family": "table",
+    "styles": [
+     {
+      "name": "table-cell",
+      "fontSize": "14px",
+      "lineHeight": "20px",
+      "fontWeight": 400,
+      "usage": "Data-table body cells (Inter).",
+      "sample": "+919973587843"
+     },
+     {
+      "name": "table-head",
+      "fontSize": "12px",
+      "lineHeight": "16px",
+      "fontWeight": 653,
+      "usage": "Data-table header cells (Inter), on ds-background-accent-gray-subtlest.",
+      "sample": "Lead Status"
+     }
+    ]
+   },
+   {
+    "name": "Code",
+    "family": "mono",
+    "styles": [
+     {
+      "name": "code",
+      "fontSize": "0.875em",
+      "lineHeight": "1",
+      "fontWeight": 400,
+      "usage": "Inline code, IDs, API keys.",
+      "sample": "c1006777-a34c"
+     }
+    ]
+   }
+  ]
+ },
+ "spacing": {
+  "note": "8px base (ds-space-100). Names are hundredths of 8px.",
+  "tokens": [
+   {
+    "name": "ds-space-0",
+    "value": "0rem",
+    "usage": "Zero."
+   },
+   {
+    "name": "ds-space-025",
+    "value": "0.125rem",
+    "usage": "2px: icon-to-badge nudge."
+   },
+   {
+    "name": "ds-space-050",
+    "value": "0.25rem",
+    "usage": "4px: table cell vertical padding, icon gap."
+   },
+   {
+    "name": "ds-space-075",
+    "value": "0.375rem",
+    "usage": "6px: button vertical padding, inline gaps."
+   },
+   {
+    "name": "ds-space-100",
+    "value": "0.5rem",
+    "usage": "8px: table cell horizontal padding, chip gap."
+   },
+   {
+    "name": "ds-space-150",
+    "value": "0.75rem",
+    "usage": "12px: button horizontal padding, card inner gap."
+   },
+   {
+    "name": "ds-space-200",
+    "value": "1rem",
+    "usage": "16px: card padding, form field gap."
+   },
+   {
+    "name": "ds-space-250",
+    "value": "1.25rem",
+    "usage": "20px."
+   },
+   {
+    "name": "ds-space-300",
+    "value": "1.5rem",
+    "usage": "24px: page gutter, section gap."
+   },
+   {
+    "name": "ds-space-400",
+    "value": "2rem",
+    "usage": "32px: between dashboard sections."
+   },
+   {
+    "name": "ds-space-500",
+    "value": "2.5rem",
+    "usage": "40px."
+   },
+   {
+    "name": "ds-space-600",
+    "value": "3rem",
+    "usage": "48px."
+   },
+   {
+    "name": "ds-space-800",
+    "value": "4rem",
+    "usage": "64px."
+   },
+   {
+    "name": "ds-space-1000",
+    "value": "5rem",
+    "usage": "80px: empty-state padding."
+   }
+  ]
+ },
+ "radius": {
+  "tokens": [
+   {
+    "name": "ds-radius-xsmall",
+    "value": "0.125rem",
+    "usage": "2px: checkboxes, badges."
+   },
+   {
+    "name": "ds-radius-small",
+    "value": "0.25rem",
+    "usage": "4px: table outer corners, icon buttons, pagination, lozenges."
+   },
+   {
+    "name": "ds-radius-medium",
+    "value": "0.375rem",
+    "usage": "6px: buttons, text fields, tabs, filter chips."
+   },
+   {
+    "name": "ds-radius-large",
+    "value": "0.5rem",
+    "usage": "8px: cards and KPI tiles."
+   },
+   {
+    "name": "ds-radius-xlarge",
+    "value": "0.75rem",
+    "usage": "12px: modals and large panels."
+   },
+   {
+    "name": "ds-radius-xxlarge",
+    "value": "1rem",
+    "usage": "16px: hero panels."
+   },
+   {
+    "name": "ds-radius-full",
+    "value": "624.9375rem",
+    "usage": "Pills, toggles, avatars."
+   }
+  ]
+ },
+ "shadow": {
+  "tokens": [
+   {
+    "name": "ds-shadow-raised",
+    "value": "0px 1px 1px #1e1f2140, 0px 0px 1px #1e1f214f",
+    "usage": "Cards that lift: kanban cards, draggable rows. (Dark value not captured; inherits light.)"
+   },
+   {
+    "name": "ds-shadow-overlay",
+    "value": {
+     "light": "0px 8px 12px #1e1f2126, 0px 0px 1px #1e1f214f",
+     "dark": "0px 0px 0px 1px #bdbdbd1f, 0px 8px 12px #0104045c, 0px 0px 1px 1px #01040480"
+    },
+    "usage": "Menus, popovers, modals, drawers."
+   },
+   {
+    "name": "ds-shadow-overflow",
+    "value": "0px 0px 8px #1e1f2129, 0px 0px 1px #1e1f211f",
+    "usage": "Edge of a horizontally scrolling table."
+   }
+  ]
+ },
+ "borderWidth": {
+  "tokens": [
+   {
+    "name": "ds-border-width",
+    "value": "0.0625rem",
+    "usage": "1px: all hairlines."
+   },
+   {
+    "name": "ds-border-width-focused",
+    "value": "0.125rem",
+    "usage": "2px focus ring."
+   },
+   {
+    "name": "ds-border-width-selected",
+    "value": "0.125rem",
+    "usage": "2px selected outline, active tab underline."
+   }
+  ]
+ },
+ "opacity": {
+  "tokens": [
+   {
+    "name": "ds-opacity-disabled",
+    "value": "0.4",
+    "usage": "Disabled media and icons."
+   },
+   {
+    "name": "ds-opacity-loading",
+    "value": "0.2",
+    "usage": "Content behind a loading spinner."
+   }
+  ]
+ },
+ "size": {
+  "tokens": [
+   {
+    "name": "control-height",
+    "value": "32px",
+    "usage": "Buttons, filter chips, selects, pagination."
+   },
+   {
+    "name": "nav-item-height",
+    "value": "40px",
+    "usage": "Left rail app icons."
+   },
+   {
+    "name": "table-row-height",
+    "value": "40px",
+    "usage": "Data-table rows (min)."
+   },
+   {
+    "name": "input-height",
+    "value": "40px",
+    "usage": "Search and text fields."
+   }
+  ]
+ }
+}

@@ -1,50 +1,56 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ChevronLeft, MapPin, Phone, Ticket } from "lucide-react";
 import { requireUser } from "@/lib/auth";
 import { getCustomer, type Item, type Order, type OrderWithItems } from "@/lib/orders/queries";
-import { Badge, Button, Card } from "@/components/ui";
+import { Badge, Button, Card, Empty } from "@/components/ui";
 import { channelLabel, fmtDate, fmtDateTime, fmtMoney } from "@/lib/format";
 
 function statusTone(s?: string | null) {
-  if (!s) return "stone" as const;
-  if (/CANCEL|RTO|RETURN/i.test(s)) return "red" as const;
-  if (/DELIVERED|COMPLETE/i.test(s)) return "green" as const;
-  return "amber" as const;
+  if (!s) return "neutral" as const;
+  if (/CANCEL|RTO|RETURN|LOST|DAMAGE/i.test(s)) return "danger" as const;
+  if (/DELIVERED|COMPLETE/i.test(s)) return "success" as const;
+  if (/PROCESS|PENDING|MANIFEST|TRANSIT|PICK/i.test(s)) return "information" as const;
+  return "warning" as const;
 }
 
 function Items({ items }: { items: Item[] }) {
   return (
     <div className="overflow-x-auto">
-      <table className="w-full min-w-[640px] text-sm">
-        <thead className="text-left text-xs uppercase tracking-wide text-stone-400">
+      <table className="ds-table min-w-[600px]">
+        <thead>
           <tr>
-            <th className="py-1 pr-3 font-medium">Item</th>
-            <th className="py-1 pr-3 font-medium">Status</th>
-            <th className="py-1 pr-3 font-medium">AWB</th>
-            <th className="py-1 pr-3 font-medium">Dispatched</th>
-            <th className="py-1 pr-3 font-medium">Delivered</th>
-            <th className="py-1 text-right font-medium">Price</th>
+            <th>Item</th>
+            <th>Status</th>
+            <th>AWB</th>
+            <th>Dispatched</th>
+            <th>Delivered</th>
+            <th className="ds-num">Price</th>
           </tr>
         </thead>
         <tbody>
           {items.map((i) => (
-            <tr key={i.sku} className="border-t border-stone-100 align-top">
-              <td className="py-1.5 pr-3">
+            <tr key={i.sku}>
+              <td>
                 <div>{i.item_name ?? i.sku}</div>
-                <div className="font-mono text-xs text-stone-400">{i.sku}</div>
+                <div className="font-mono text-xs text-ds-text-subtlest">
+                  {i.sku}
+                  {i.ean && <> · {i.ean}</>}
+                </div>
               </td>
-              <td className="py-1.5 pr-3">
+              <td>
                 <div className="flex flex-col items-start gap-1">
                   <Badge tone={statusTone(i.sale_order_status)}>{i.sale_order_status ?? "—"}</Badge>
                   {i.courier_status && <Badge tone={statusTone(i.courier_status)}>{i.courier_status}</Badge>}
                 </div>
               </td>
-              <td className="py-1.5 pr-3">
-                <div className="font-mono text-xs">{i.tracking_number ?? "—"}</div>
-                <div className="text-xs text-stone-400">{i.shipping_provider}</div>
+              <td>
+                <div className="font-mono text-[13px]">{i.tracking_number ?? <Empty />}</div>
+                <div className="text-xs text-ds-text-subtlest">{i.shipping_provider}</div>
               </td>
-              <td className="py-1.5 pr-3 text-xs">{fmtDateTime(i.dispatch_date)}</td>
-              <td className="py-1.5 pr-3 text-xs">{fmtDateTime(i.delivery_time)}</td>
-              <td className="py-1.5 text-right">{fmtMoney(i.selling_price)}</td>
+              <td className="whitespace-nowrap">{i.dispatch_date ? fmtDateTime(i.dispatch_date) : <Empty />}</td>
+              <td className="whitespace-nowrap">{i.delivery_time ? fmtDateTime(i.delivery_time) : <Empty />}</td>
+              <td className="ds-num">{fmtMoney(i.selling_price)}</td>
             </tr>
           ))}
         </tbody>
@@ -56,11 +62,11 @@ function Items({ items }: { items: Item[] }) {
 function OrderHeader({ o }: { o: Order }) {
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <span className="font-mono text-sm font-semibold">{o.order_code}</span>
-      <Badge tone="indigo">{channelLabel(o.order_channel)}</Badge>
-      {o.link_type && <Badge tone="amber">{o.link_type}</Badge>}
-      <span className="text-sm text-stone-500">{fmtDateTime(o.order_date)}</span>
-      <span className="ml-auto text-sm font-medium">{fmtMoney(o.total_price)}</span>
+      <span className="font-mono text-[13px] font-semibold">{o.order_code}</span>
+      <Badge tone="information">{channelLabel(o.order_channel)}</Badge>
+      {o.link_type && <Badge tone="discovery">{o.link_type}</Badge>}
+      <span className="text-ds-text-subtle">{fmtDateTime(o.order_date)}</span>
+      <span className="ml-auto font-semibold">{fmtMoney(o.total_price)}</span>
     </div>
   );
 }
@@ -88,72 +94,95 @@ export default async function CustomerPage({ params, searchParams }: PageProps<"
   const matchedCount = orders.filter((o) => groupMatches(o, q)).length;
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[300px_1fr]">
-      <aside className="space-y-4">
-        <Card className="p-4">
-          <p className="text-xs uppercase tracking-wide text-stone-400">Customer</p>
-          <h1 className="text-lg font-semibold">{c.name ?? "Name not available"}</h1>
-          <p className="font-mono text-sm text-stone-700">{c.phones.join(", ") || "No mobile in order data"}</p>
-          {c.addresses.length > 0 && (
-            <div className="mt-3 space-y-2 text-sm text-stone-600">
-              {c.addresses.slice(0, 3).map((a) => (
-                <p key={a}>{a}</p>
-              ))}
-            </div>
-          )}
-          <p className="mt-3 text-xs text-stone-400">
-            {c.orders.length} order{c.orders.length === 1 ? "" : "s"}
-          </p>
-        </Card>
-        <Card className="p-4">
-          <p className="mb-2 text-xs uppercase tracking-wide text-stone-400">Tickets</p>
-          <p className="mb-3 text-sm text-stone-500">No tickets yet.</p>
-          <Button disabled className="w-full" title="Arrives with the Tickets module">
-            Create ticket (coming next)
+    <>
+      {q && (
+        <Link href={`/search?q=${encodeURIComponent(q)}`} className="mb-3 inline-flex items-center gap-1 text-ds-link hover:underline">
+          <ChevronLeft size={16} aria-hidden /> Search results
+        </Link>
+      )}
+      <div className="mb-6 flex flex-wrap items-end gap-3">
+        <div>
+          <p className="ds-heading-xxsmall text-ds-text-subtlest uppercase">Customer</p>
+          <h1 className="ds-heading-large">{c.name ?? "Name not available"}</h1>
+        </div>
+        <div className="ml-auto">
+          <Button appearance="primary" disabled title="Arrives with the Tickets module">
+            <Ticket size={16} aria-hidden /> Create ticket
           </Button>
-        </Card>
-      </aside>
+        </div>
+      </div>
 
-      <div className="space-y-4">
-        {matchedCount > 0 && c.orders.length > matchedCount && (
-          <p className="text-sm text-stone-500">
-            Showing the order you searched for first, then this customer’s {c.orders.length - matchedCount} other order
-            {c.orders.length - matchedCount === 1 ? "" : "s"}.
-          </p>
-        )}
-        {orders.map((o) => (
-          <Card
-            key={o.order_code}
-            className={`p-4 ${groupMatches(o, q) ? "border-indigo-400 ring-2 ring-indigo-100" : ""}`}
-          >
-            {groupMatches(o, q) && (
-              <div className="mb-2">
-                <Badge tone="indigo">Searched order</Badge>
-              </div>
-            )}
-            <OrderHeader o={o} />
-            <div className="mt-3">
-              <Items items={o.items} />
+      <div className="grid gap-6 xl:grid-cols-[280px_1fr]">
+        <aside className="space-y-4">
+          <Card className="p-4">
+            <h2 className="ds-heading-xsmall mb-3">Contact</h2>
+            <div className="flex items-start gap-2">
+              <Phone size={16} className="mt-0.5 shrink-0 text-ds-icon-subtle" aria-hidden />
+              <span className="font-mono text-[13px]">{c.phones.length ? c.phones.map((p) => `+91 ${p}`).join(", ") : <Empty />}</span>
             </div>
-            {o.linked.length > 0 && (
-              <div className="mt-4 space-y-3 border-l-2 border-amber-200 pl-4">
-                <p className="text-xs uppercase tracking-wide text-stone-400">Linked shipments</p>
-                {o.linked.map((l) => (
-                  <div key={l.order_code}>
-                    <OrderHeader o={l} />
-                    <div className="mt-2">
-                      <Items items={l.items} />
-                    </div>
-                  </div>
-                ))}
+            {c.addresses.slice(0, 3).map((a) => (
+              <div key={a} className="mt-3 flex items-start gap-2 text-ds-text-subtle">
+                <MapPin size={16} className="mt-0.5 shrink-0 text-ds-icon-subtle" aria-hidden />
+                <span>{a}</span>
               </div>
-            )}
-            <div className="mt-3 border-t border-stone-100 pt-2 text-xs text-stone-400">
-              Tickets on this order: none · Delivered {fmtDate(o.items.find((i) => i.delivery_time)?.delivery_time)}
+            ))}
+            <div className="mt-4 grid grid-cols-2 gap-2 border-t border-ds-border pt-3">
+              <div>
+                <p className="ds-body-small text-ds-text-subtle">Orders</p>
+                <p className="ds-heading-small">{c.orders.length}</p>
+              </div>
+              <div>
+                <p className="ds-body-small text-ds-text-subtle">Tickets</p>
+                <p className="ds-heading-small">0</p>
+              </div>
             </div>
           </Card>
-        ))}
+          <Card className="p-4">
+            <h2 className="ds-heading-xsmall mb-1">Tickets</h2>
+            <p className="text-ds-text-subtle">No tickets yet. Ticketing arrives in the next module.</p>
+          </Card>
+        </aside>
+
+        <div className="min-w-0 space-y-4">
+          {matchedCount > 0 && c.orders.length > matchedCount && (
+            <p className="text-ds-text-subtle">
+              Showing the order you searched for first, then this customer’s {c.orders.length - matchedCount} other order
+              {c.orders.length - matchedCount === 1 ? "" : "s"}.
+            </p>
+          )}
+          {orders.map((o) => {
+            const hit = groupMatches(o, q);
+            return (
+              <Card key={o.order_code} className={`overflow-hidden ${hit ? "border-ds-border-selected ring-1 ring-ds-border-selected" : ""}`}>
+                <div className={`px-4 py-3 ${hit ? "bg-ds-background-selected" : ""}`}>
+                  {hit && <p className="ds-heading-xxsmall mb-1 text-ds-text-selected uppercase">Searched order</p>}
+                  <OrderHeader o={o} />
+                </div>
+                <Items items={o.items} />
+                {o.linked.length > 0 && (
+                  <div className="border-t border-ds-border bg-ds-surface-sunken px-4 py-3">
+                    <p className="ds-heading-xxsmall mb-2 text-ds-text-subtle uppercase">Linked shipments</p>
+                    <div className="space-y-3">
+                      {o.linked.map((l) => (
+                        <div key={l.order_code} className="overflow-hidden rounded-ds-small border border-ds-border bg-ds-surface">
+                          <div className="px-3 py-2">
+                            <OrderHeader o={l} />
+                          </div>
+                          <Items items={l.items} />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                <div className="flex flex-wrap gap-x-4 border-t border-ds-border px-4 py-2 text-xs text-ds-text-subtle">
+                  <span>Tickets on this order: none</span>
+                  <span>Delivered {fmtDate(o.items.find((i) => i.delivery_time)?.delivery_time)}</span>
+                </div>
+              </Card>
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

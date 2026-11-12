@@ -1,35 +1,25 @@
-import Link from "next/link";
 import { requireUser } from "@/lib/auth";
-import { logout } from "@/app/login/actions";
-import { SearchBar } from "@/components/search-bar";
+import { appsFor } from "@/lib/nav";
+import { TopBar } from "@/components/shell/top-bar";
+import { AppRail, BottomTabs, ModuleNav } from "@/components/shell/side-nav";
 
 export default async function AppLayout({ children }: LayoutProps<"/">) {
   const user = await requireUser();
-  const isAdmin = user.roles.includes("admin");
-  const nav = [
-    { href: "/search", label: "Search" },
-    ...(isAdmin ? [{ href: "/admin/users", label: "Users" }, { href: "/admin/data", label: "Order data" }] : []),
-  ];
+  const apps = appsFor(user.roles);
   return (
-    <div className="flex min-h-full flex-1 flex-col">
-      <header className="sticky top-0 z-10 border-b border-stone-200 bg-white">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-6 gap-y-2 px-4 py-2.5">
-          <Link href="/search" className="font-semibold text-indigo-700">SleepyHug CS</Link>
-          <nav className="flex gap-4 text-sm text-stone-600">
-            {nav.map((n) => (
-              <Link key={n.href} href={n.href} className="hover:text-stone-900">{n.label}</Link>
-            ))}
-          </nav>
-          <div className="order-last w-full sm:order-none sm:w-auto sm:flex-1"><SearchBar /></div>
-          <div className="ml-auto flex items-center gap-3 text-sm sm:ml-0">
-            <span className="text-stone-600">{user.fullName}</span>
-            <form action={logout}>
-              <button className="text-stone-500 hover:text-stone-900">Sign out</button>
-            </form>
+    <div className="flex h-dvh flex-col">
+      <TopBar user={user} />
+      <div className="flex min-h-0 flex-1">
+        <AppRail apps={apps} />
+        <ModuleNav apps={apps} variant="sidebar" />
+        <main className="min-w-0 flex-1 overflow-y-auto bg-ds-surface-sunken">
+          <div className="w-full max-w-7xl px-4 pt-4 pb-24 md:px-6 md:py-6">
+            <ModuleNav apps={apps} variant="tabs" />
+            {children}
           </div>
-        </div>
-      </header>
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6">{children}</main>
+        </main>
+      </div>
+      <BottomTabs apps={apps} />
     </div>
   );
 }

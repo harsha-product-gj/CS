@@ -10,12 +10,14 @@
     "db:migrate": "node --env-file=.env.local scripts/migrate.mts",
     "import:orders": "node --env-file=.env.local scripts/import-orders.mts",
     "user:create": "node --env-file=.env.local scripts/create-user.mts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "tokens": "node scripts/gen-tokens.mts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.119.0",
     "csv-parse": "^7.0.3",
+    "lucide-react": "^1.72.0",
     "next": "16.4.6",
     "pg": "^8.23.1",
     "react": "19.3.0",

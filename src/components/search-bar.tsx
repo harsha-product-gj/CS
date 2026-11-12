@@ -2,24 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState, useTransition } from "react";
-
-function Spinner() {
-  return (
-    <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeOpacity="0.3" strokeWidth="3" />
-      <path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function SearchIcon() {
-  return (
-    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden>
-      <circle cx="11" cy="11" r="7" />
-      <path d="m20 20-3.5-3.5" strokeLinecap="round" />
-    </svg>
-  );
-}
+import { Loader2, Search } from "lucide-react";
 
 function Inner() {
   const params = useSearchParams();
@@ -48,22 +31,25 @@ function Inner() {
         e.preventDefault();
         submit();
       }}
-      className="flex w-full items-stretch overflow-hidden rounded-md border border-stone-300 bg-white focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-100"
+      className="flex w-full items-center gap-2"
     >
-      <input
-        value={q}
-        onChange={(e) => setQ(e.target.value)}
-        placeholder="Mobile, order ID, AWB, name, ASIN/FSN or pincode"
-        className="min-w-0 flex-1 bg-transparent px-3 py-2 text-sm outline-none"
-        aria-label="Search"
-      />
+      <div className="relative min-w-0 flex-1">
+        <Search size={16} className="pointer-events-none absolute top-1/2 left-2.5 -translate-y-1/2 text-ds-icon-subtle" aria-hidden />
+        <input
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="Mobile, order ID, AWB, name, ASIN/FSN or pincode"
+          className="ds-input pl-8"
+          aria-label="Search customers"
+        />
+      </div>
       <button
         type="submit"
         disabled={pending || !q.trim()}
         aria-busy={pending}
-        className="flex items-center gap-1.5 bg-indigo-600 px-3 text-sm font-medium text-white hover:bg-indigo-700 disabled:cursor-default disabled:bg-indigo-400"
+        className="ds-focus inline-flex h-10 shrink-0 items-center gap-1.5 rounded-ds-medium bg-ds-background-brand-bold px-3 text-sm font-medium text-ds-text-inverse hover:bg-ds-background-brand-bold-hovered disabled:cursor-default disabled:bg-ds-background-disabled disabled:text-ds-text-disabled"
       >
-        {pending ? <Spinner /> : <SearchIcon />}
+        {pending ? <Loader2 size={16} className="animate-spin" aria-hidden /> : <Search size={16} aria-hidden />}
         <span className="hidden sm:inline">{pending ? "Searching…" : "Search"}</span>
       </button>
     </form>
@@ -72,7 +58,7 @@ function Inner() {
 
 export function SearchBar() {
   return (
-    <Suspense fallback={<div className="h-[38px] w-full rounded-md border border-stone-300 bg-white" />}>
+    <Suspense fallback={<div className="h-10 w-full rounded-ds-medium border border-ds-border-input bg-ds-background-input" />}>
       <Inner />
     </Suspense>
   );
