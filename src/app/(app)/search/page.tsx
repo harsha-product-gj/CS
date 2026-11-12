@@ -3,7 +3,9 @@ import { redirect } from "next/navigation";
 import { PackageSearch, SearchX } from "lucide-react";
 import { requireUser } from "@/lib/auth";
 import { searchCustomers, SEARCH_LIMIT } from "@/lib/orders/queries";
-import { Badge, Button, Card, Empty, EmptyState, PageHeader } from "@/components/ui";
+import { Badge, buttonClass, Card, CardHeader, Empty, EmptyState, PageHeader } from "@/components/ui";
+import { searchTickets } from "@/lib/tickets/queries";
+import { TicketTable } from "@/components/tickets/ticket-table";
 import { channelLabel, fmtDate } from "@/lib/format";
 
 const MATCH_LABEL: Record<string, string> = {
@@ -17,6 +19,7 @@ const TIPS = [
   ["Name", "Rajiv Gupta"],
   ["ASIN / FSN", "B0CQ59BQX7"],
   ["Pincode", "226020"],
+  ["Ticket ID / email", "C-FS-2611-0001, name@example.com"],
 ];
 
 export default async function SearchPage({ searchParams }: PageProps<"/search">) {
@@ -52,8 +55,15 @@ export default async function SearchPage({ searchParams }: PageProps<"/search">)
     return <PageHeader title="Customer search" description="Type at least 3 characters." />;
   }
 
-  const { matches, truncated } = await searchCustomers(q);
-  if (matches.length === 1) redirect(`/customers/${encodeURIComponent(matches[0].key)}?q=${encodeURIComponent(q)}`);
+  if (/^[CE]-[A-Z]{2}-\d{4}-\d{4,}$/i.test(q)) redirect(`/tickets/${encodeURIComponent(q.toUpperCase())}`);
+  const [{ matches, truncated }, tickets] = await Promise.all([searchCustomers(q), searchTickets(q)]);
+  const ticketsCard = tickets.length > 0 && (
+    <Card className="mt-6 overflow-hidden">
+      <CardHeader title={`Tickets (${tickets.length})`} />
+      <TicketTable rows={tickets} />
+    </Card>
+  );
+  if (matches.length === 1 && tickets.length === 0) redirect(`/customers/${encodeURIComponent(matches[0].key)}?q=${encodeURIComponent(q)}`);
 
   if (!matches.length) {
     return (
@@ -63,13 +73,14 @@ export default async function SearchPage({ searchParams }: PageProps<"/search">)
           <EmptyState icon={<SearchX size={40} strokeWidth={1.5} />} title={`No orders found for “${q}”`}>
             <p>
               That’s expected for Amazon FBA, Flipkart FBF and most RetailEZ orders, and for enquiries without an order.
-              You’ll be able to create a ticket with the customer’s details by hand.
+              Create a ticket and enter the customer’s details by hand.
             </p>
-            <Button disabled className="mt-4" title="Arrives with the Tickets module">
-              Create ticket (coming next)
-            </Button>
+            <Link href={`/tickets/new?q=${encodeURIComponent(q)}`} className={buttonClass("primary", "mt-4")}>
+              Create ticket
+            </Link>
           </EmptyState>
         </Card>
+        {ticketsCard}
       </>
     );
   }
@@ -126,6 +137,7 @@ export default async function SearchPage({ searchParams }: PageProps<"/search">)
           </table>
         </div>
       </Card>
+      {ticketsCard}
     </>
   );
 }

@@ -4,7 +4,7 @@ import type { Role } from "@/lib/auth";
 export type IconName =
   | "support" | "operations" | "insights" | "admin"
   | "search" | "tickets" | "followups" | "missed" | "resolutions" | "pickups" | "dispatches"
-  | "dashboard" | "users" | "data";
+  | "dashboard" | "users" | "data" | "alltickets" | "sla";
 
 export type NavItem = { label: string; href: string; icon: IconName; soon?: boolean };
 export type NavApp = {
@@ -28,8 +28,8 @@ export const APPS: NavApp[] = [
     match: ["/search", "/customers", "/tickets"],
     items: [
       { label: "Customer search", href: "/search", icon: "search" },
-      { label: "Tickets", href: "/tickets", icon: "tickets", soon: true },
-      { label: "Follow-ups", href: "/follow-ups", icon: "followups", soon: true },
+      { label: "My tickets", href: "/tickets", icon: "tickets" },
+      { label: "All tickets", href: "/tickets/all", icon: "alltickets" },
       { label: "Missed calls", href: "/missed-calls", icon: "missed", soon: true },
     ],
   },
@@ -64,6 +64,7 @@ export const APPS: NavApp[] = [
     roles: ["admin"],
     items: [
       { label: "Users", href: "/admin/users", icon: "users" },
+      { label: "SLA settings", href: "/admin/sla", icon: "sla" },
       { label: "Order data", href: "/admin/data", icon: "data" },
     ],
   },

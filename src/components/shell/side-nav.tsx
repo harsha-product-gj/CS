@@ -5,7 +5,9 @@ import { usePathname } from "next/navigation";
 import { activeApp, type NavApp } from "@/lib/nav";
 import { NavIcon } from "./icons";
 
-const isActive = (pathname: string, href: string) => pathname === href || pathname.startsWith(href + "/");
+const isActive = (pathname: string, href: string, all: string[] = []) =>
+  (pathname === href || pathname.startsWith(href + "/")) &&
+  !all.some((o) => o !== href && o.startsWith(href + "/") && (pathname === o || pathname.startsWith(o + "/")));
 
 /** 48px app rail (desktop). */
 export function AppRail({ apps }: { apps: NavApp[] }) {
@@ -41,7 +43,7 @@ export function ModuleNav({ apps, variant }: { apps: NavApp[]; variant: "sidebar
     return (
       <nav aria-label={app.label} className="-mx-4 mb-4 flex gap-4 overflow-x-auto border-b border-ds-border px-4 md:-mx-6 md:px-6 lg:hidden">
         {app.items.filter((i) => !i.soon).map((i) => {
-          const on = isActive(pathname, i.href);
+          const on = isActive(pathname, i.href, app.items.map((x) => x.href));
           return (
             <Link key={i.href} href={i.href}
               className={`-mb-px flex shrink-0 items-center gap-1.5 border-b-2 py-2 ${
@@ -60,7 +62,7 @@ export function ModuleNav({ apps, variant }: { apps: NavApp[]; variant: "sidebar
       <p className="ds-heading-xxsmall px-2 pt-2 pb-2 text-ds-text-subtlest uppercase">{app.label}</p>
       <ul className="space-y-0.5">
         {app.items.map((i) => {
-          const on = isActive(pathname, i.href);
+          const on = isActive(pathname, i.href, app.items.map((x) => x.href));
           const base = "relative flex h-8 items-center gap-2 rounded-ds-small px-2";
           return (
             <li key={i.href}>

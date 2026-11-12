@@ -3,7 +3,9 @@ import { notFound } from "next/navigation";
 import { ChevronLeft, MapPin, Phone, Ticket } from "lucide-react";
 import { requireUser } from "@/lib/auth";
 import { getCustomer, type Item, type Order, type OrderWithItems } from "@/lib/orders/queries";
-import { Badge, Button, Card, Empty } from "@/components/ui";
+import { Badge, buttonClass, Card, Empty } from "@/components/ui";
+import { ticketsForCustomer, type TicketListRow } from "@/lib/tickets/queries";
+import { SLA_FLAG_LABEL, SLA_FLAG_TONE, STATUS_TONE } from "@/lib/tickets/constants";
 import { channelLabel, fmtDate, fmtDateTime, fmtMoney } from "@/lib/format";
 
 function statusTone(s?: string | null) {
@@ -92,6 +94,12 @@ export default async function CustomerPage({ params, searchParams }: PageProps<"
   // Orders the search pointed at come first and are highlighted; the customer's other orders follow.
   const orders = [...c.orders].sort((a, b) => Number(groupMatches(b, q)) - Number(groupMatches(a, q)));
   const matchedCount = orders.filter((o) => groupMatches(o, q)).length;
+  const allCodes = c.orders.flatMap((o) => [o.order_code, ...o.linked.map((l) => l.order_code)]);
+  const tickets = await ticketsForCustomer({ phones: c.phones, orderCodes: allCodes });
+  const ticketsByOrder = new Map<string, TicketListRow[]>();
+  for (const tk of tickets) if (tk.order_code) ticketsByOrder.set(tk.order_code, [...(ticketsByOrder.get(tk.order_code) ?? []), tk]);
+  const openCount = tickets.filter((tk) => !tk.is_closed).length;
+  const newTicketHref = c.phones[0] ? `/tickets/new?phone=${c.phones[0]}` : `/tickets/new?order=${encodeURIComponent(c.latestOrder)}`;
 
   return (
     <>
@@ -106,9 +114,9 @@ export default async function CustomerPage({ params, searchParams }: PageProps<"
           <h1 className="ds-heading-large">{c.name ?? "Name not available"}</h1>
         </div>
         <div className="ml-auto">
-          <Button appearance="primary" disabled title="Arrives with the Tickets module">
+          <Link href={newTicketHref} className={buttonClass("primary")}>
             <Ticket size={16} aria-hidden /> Create ticket
-          </Button>
+          </Link>
         </div>
       </div>
 
@@ -133,13 +141,25 @@ export default async function CustomerPage({ params, searchParams }: PageProps<"
               </div>
               <div>
                 <p className="ds-body-small text-ds-text-subtle">Tickets</p>
-                <p className="ds-heading-small">0</p>
+                <p className="ds-heading-small">{tickets.length}{openCount > 0 && <span className="ml-1 text-xs font-normal text-ds-text-subtle">({openCount} open)</span>}</p>
               </div>
             </div>
           </Card>
           <Card className="p-4">
-            <h2 className="ds-heading-xsmall mb-1">Tickets</h2>
-            <p className="text-ds-text-subtle">No tickets yet. Ticketing arrives in the next module.</p>
+            <h2 className="ds-heading-xsmall mb-2">Tickets</h2>
+            {tickets.length === 0 && <p className="text-ds-text-subtle">No tickets yet.</p>}
+            <ul className="space-y-2">
+              {tickets.map((tk) => (
+                <li key={tk.id} className={`rounded-ds-small border p-2 ${tk.is_closed ? "border-ds-border" : "border-ds-border-selected bg-ds-background-selected"}`}>
+                  <Link href={`/tickets/${encodeURIComponent(tk.code)}`} className="font-mono text-[13px] font-medium text-ds-link hover:underline">{tk.code}</Link>
+                  <p className="text-xs text-ds-text-subtle">{tk.category} · {tk.owner_name ?? "Unassigned"}</p>
+                  <div className="mt-1 flex flex-wrap gap-1">
+                    <Badge tone={STATUS_TONE[tk.display_status] ?? "neutral"}>{tk.display_status}</Badge>
+                    {tk.is_closed ? <Badge>Closed</Badge> : <Badge tone={SLA_FLAG_TONE[tk.sla_flag]}>{SLA_FLAG_LABEL[tk.sla_flag]}</Badge>}
+                  </div>
+                </li>
+              ))}
+            </ul>
           </Card>
         </aside>
 
@@ -174,9 +194,26 @@ export default async function CustomerPage({ params, searchParams }: PageProps<"
                     </div>
                   </div>
                 )}
-                <div className="flex flex-wrap gap-x-4 border-t border-ds-border px-4 py-2 text-xs text-ds-text-subtle">
-                  <span>Tickets on this order: none</span>
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-ds-border px-4 py-2 text-xs text-ds-text-subtle">
+                  <span>
+                    Tickets on this order:{" "}
+                    {(() => {
+                      const list = [o.order_code, ...o.linked.map((l) => l.order_code)].flatMap((code) => ticketsByOrder.get(code) ?? []);
+                      return list.length
+                        ? list.map((tk, i) => (
+                            <span key={tk.id}>
+                              {i > 0 && ", "}
+                              <Link href={`/tickets/${encodeURIComponent(tk.code)}`} className="font-mono text-ds-link hover:underline">{tk.code}</Link>
+                              {!tk.is_closed && " (open)"}
+                            </span>
+                          ))
+                        : "none";
+                    })()}
+                  </span>
                   <span>Delivered {fmtDate(o.items.find((i) => i.delivery_time)?.delivery_time)}</span>
+                  <Link href={`/tickets/new?order=${encodeURIComponent(o.order_code)}`} className={buttonClass("subtle", "ml-auto h-7 text-xs")}>
+                    <Ticket size={14} aria-hidden /> Create ticket for this order
+                  </Link>
                 </div>
               </Card>
             );
